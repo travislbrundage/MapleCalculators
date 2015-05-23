@@ -20,6 +20,14 @@ window.onload = function() {
 	var THIEF_HPMP_LVL30 = {HP: 1100, MP: 625};
 	var PIRATE_HPMP_LVL30 = {HP: 1100, MP: 625};
 	
+	// Job advancement gains
+	var SPEARMAN_ADVANCEMENT = {HP: 0, MP: 125};
+	var PAGE_ADVANCEMENT = {HP: 0, MP: 125};
+	var FIGHTER_ADVANCEMENT = {HP: 325, MP: 0};
+	var ARCHER_ADVANCEMENT = {HP: 0, MP: 125};
+	var THIEF_ADVANCEMENT = {HP: 0, MP: 125};
+	var PIRATE_ADVANCEMENT = {HP: 0, MP: 125};
+	
 	// Raw level up gains
 	// NOTE: The true formula has some randomness in it which is not used here.
 	var WARRIOR_LVLUP = {HP: 65.5, MP: 4.5};
@@ -89,20 +97,31 @@ var calculate = function() {
 	// advancement, as well as 2nd. This code will need to be updated with that.
 	
 	// Get the background data for the class selection
-	var HPperAP, MPloss, MinMPformula, MPperLevel;
+	var HPperAP, MPloss, MinMPformula, MPperLevel, AdvancementHP, AdvancementMP;
 	switch (job.value) {
 		case "Spearman":
 			HPperAP = WARRIOR_AP[HP];
 			MPloss = WARRIOR_RESET[MPloss];
 			MinMPformula = SPEARMAN_MP_MIN;
 			MPperLevel = WARRIOR_LVLUP[MP];
+			AdvancementHP = SPEARMAN_ADVANCEMENT[HP];
+			AdvancementMP = SPEARMAN_ADVANCEMENT[MP];
 			break;
 		case "Fighter":
-		case "Page":
 			HPperAP = WARRIOR_AP[HP];
 			MPloss = WARRIOR_RESET[MPloss];
 			MinMPformula = FIGHTER_MP_MIN;
 			MPperLevel = WARRIOR_LVLUP[MP];
+			AdvancementHP = FIGHTER_ADVANCEMENT[HP];
+			AdvancementMP = FIGHTER_ADVANCEMENT[MP];
+			break;
+		case "Page":
+			HPperAP = WARRIOR_AP[HP];
+			MPloss = WARRIOR_RESET[MPloss];
+			MinMPformula = PAGE_MP_MIN;
+			MPperLevel = WARRIOR_LVLUP[MP];
+			AdvancementHP = PAGE_ADVANCEMENT[HP];
+			AdvancementMP = PAGE_ADVANCEMENT[MP];
 			break;
 		case "Hunter":
 		case "Crossbowman":
@@ -110,6 +129,8 @@ var calculate = function() {
 			MPloss = ARCHER_RESET[MPloss];
 			MinMPformula = ARCHER_MP_MIN;
 			MPperLevel = ARCHER_LVLUP[MP];
+			AdvancementHP = ARCHER_ADVANCEMENT[HP];
+			AdvancementMP = ARCHER_ADVANCEMENT[MP];
 			break;
 		case "Assassin":
 		case "Bandit":
@@ -117,18 +138,24 @@ var calculate = function() {
 			MPloss = THIEF_RESET[MPloss];
 			MinMPformula = THIEF_MP_MIN;
 			MPperLevel = THIEF_LVLUP[MP];
+			AdvancementHP = THIEF_ADVANCEMENT[HP];
+			AdvancementMP = THIEF_ADVANCEMENT[MP];
 			break;
 		case "Gunslinger":
 			HPperAP = GUNSLINGER_AP[HP];
 			MPloss = PIRATE_RESET[MPloss];
 			MinMPformula = PIRATE_MP_MIN;
 			MPperLevel = GUNSLINGER_LVLUP[MP];
+			AdvancementHP = PIRATE_ADVANCEMENT[HP];
+			AdvancementMP = PIRATE_ADVANCEMENT[MP];
 			break;
 		case "Brawler":
 			HPperAP = BRAWLER_AP[HP];
 			MPloss = PIRATE_RESET[MPloss];
 			MinMPformula = PIRATE_MP_MIN;
 			MPperLevel = BRAWLER_LVLUP[MP];
+			AdvancementHP = PIRATE_ADVANCEMENT[HP];
+			AdvancementMP = PIRATE_ADVANCEMENT[MP];
 			break;
 		default:
 			// Perhaps include Beginner data?
@@ -144,9 +171,28 @@ var calculate = function() {
 		return;
 	}
 	
+	// Adjust for how many advancements
+	if (levelgoal.value < 70) {
+		AdvancementHP = 0;
+		AdvancementMP = 0;
+	} else if (levelgoal.value < 120) {
+		if (currentlevel.value > 70) {
+			AdvancementHP = 0;
+			AdvancementMP = 0;
+		}
+	} else {
+		if (currentlevel.value > 120) {
+			AdvancementHP = 0;
+			AdvancementMP = 0;
+		} else if (currentlevel.value < 70) {
+			AdvancementHP *= 2;
+			AdvancementMP *= 2;
+		}
+	}
+	
 	// apintohp
 	if (HPperAP != 0) {
-		apintohp.value = (hpgoal.value - currenthp.value) / HPperAP;		
+		apintohp.value = (hpgoal.value - currenthp.value - AdvancementHP) / HPperAP;		
 	}
 	
 	// apresets
@@ -159,7 +205,7 @@ var calculate = function() {
 	totalmp.value = MinMPformula(levelgoal.value) + extramp.value;
 	
 	// intmp
-	intmp.value = totalmp.value - ((levelgoal.value - currentlevel.value) * MPperLevel);
+	intmp.value = totalmp.value - ((levelgoal.value - currentlevel.value) * MPperLevel + AdvancementMP);
 	
 	// baseint
 	baseint.value = (intmp.value / (levelgoal.value - currentlevel.value)) * 10;
