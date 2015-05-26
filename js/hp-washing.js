@@ -93,62 +93,62 @@ window.onload = function() {
 		var HPperAP, MPloss, MinMPformula, MPperLevel, AdvancementHP, AdvancementMP;
 		switch (job.value) {
 			case "Spearman":
-				HPperAP = WARRIOR_AP[HP];
-				MPloss = WARRIOR_RESET[MPloss];
+				HPperAP = WARRIOR_AP['HP'];
+				MPloss = WARRIOR_RESET['MPloss'];
 				MinMPformula = SPEARMAN_MP_MIN;
-				MPperLevel = WARRIOR_LVLUP[MP];
-				AdvancementHP = SPEARMAN_ADVANCEMENT[HP];
-				AdvancementMP = SPEARMAN_ADVANCEMENT[MP];
+				MPperLevel = WARRIOR_LVLUP['MP'];
+				AdvancementHP = SPEARMAN_ADVANCEMENT['HP'];
+				AdvancementMP = SPEARMAN_ADVANCEMENT['MP'];
 				break;
 			case "Fighter":
-				HPperAP = WARRIOR_AP[HP];
-				MPloss = WARRIOR_RESET[MPloss];
+				HPperAP = WARRIOR_AP['HP'];
+				MPloss = WARRIOR_RESET['MPloss'];
 				MinMPformula = FIGHTER_MP_MIN;
-				MPperLevel = WARRIOR_LVLUP[MP];
-				AdvancementHP = FIGHTER_ADVANCEMENT[HP];
-				AdvancementMP = FIGHTER_ADVANCEMENT[MP];
+				MPperLevel = WARRIOR_LVLUP['MP'];
+				AdvancementHP = FIGHTER_ADVANCEMENT['HP'];
+				AdvancementMP = FIGHTER_ADVANCEMENT['MP'];
 				break;
 			case "Page":
-				HPperAP = WARRIOR_AP[HP];
-				MPloss = WARRIOR_RESET[MPloss];
+				HPperAP = WARRIOR_AP['HP'];
+				MPloss = WARRIOR_RESET['MPloss'];
 				MinMPformula = PAGE_MP_MIN;
-				MPperLevel = WARRIOR_LVLUP[MP];
-				AdvancementHP = PAGE_ADVANCEMENT[HP];
-				AdvancementMP = PAGE_ADVANCEMENT[MP];
+				MPperLevel = WARRIOR_LVLUP['MP'];
+				AdvancementHP = PAGE_ADVANCEMENT['HP'];
+				AdvancementMP = PAGE_ADVANCEMENT['MP'];
 				break;
 			case "Hunter":
 			case "Crossbowman":
-				HPperAP = ARCHER_AP[HP];
-				MPloss = ARCHER_RESET[MPloss];
+				HPperAP = ARCHER_AP['HP'];
+				MPloss = ARCHER_RESET['MPloss'];
 				MinMPformula = ARCHER_MP_MIN;
-				MPperLevel = ARCHER_LVLUP[MP];
-				AdvancementHP = ARCHER_ADVANCEMENT[HP];
-				AdvancementMP = ARCHER_ADVANCEMENT[MP];
+				MPperLevel = ARCHER_LVLUP['MP'];
+				AdvancementHP = ARCHER_ADVANCEMENT['HP'];
+				AdvancementMP = ARCHER_ADVANCEMENT['MP'];
 				break;
 			case "Assassin":
 			case "Bandit":
-				HPperAP = THIEF_AP[HP];
-				MPloss = THIEF_RESET[MPloss];
+				HPperAP = THIEF_AP['HP'];
+				MPloss = THIEF_RESET['MPloss'];
 				MinMPformula = THIEF_MP_MIN;
-				MPperLevel = THIEF_LVLUP[MP];
-				AdvancementHP = THIEF_ADVANCEMENT[HP];
-				AdvancementMP = THIEF_ADVANCEMENT[MP];
+				MPperLevel = THIEF_LVLUP['MP'];
+				AdvancementHP = THIEF_ADVANCEMENT['HP'];
+				AdvancementMP = THIEF_ADVANCEMENT['MP'];
 				break;
 			case "Gunslinger":
-				HPperAP = GUNSLINGER_AP[HP];
-				MPloss = PIRATE_RESET[MPloss];
+				HPperAP = GUNSLINGER_AP['HP'];
+				MPloss = PIRATE_RESET['MPloss'];
 				MinMPformula = PIRATE_MP_MIN;
-				MPperLevel = GUNSLINGER_LVLUP[MP];
-				AdvancementHP = PIRATE_ADVANCEMENT[HP];
-				AdvancementMP = PIRATE_ADVANCEMENT[MP];
+				MPperLevel = GUNSLINGER_LVLUP['MP'];
+				AdvancementHP = PIRATE_ADVANCEMENT['HP'];
+				AdvancementMP = PIRATE_ADVANCEMENT['MP'];
 				break;
 			case "Brawler":
-				HPperAP = BRAWLER_AP[HP];
-				MPloss = PIRATE_RESET[MPloss];
+				HPperAP = BRAWLER_AP['HP'];
+				MPloss = PIRATE_RESET['MPloss'];
 				MinMPformula = PIRATE_MP_MIN;
-				MPperLevel = BRAWLER_LVLUP[MP];
-				AdvancementHP = PIRATE_ADVANCEMENT[HP];
-				AdvancementMP = PIRATE_ADVANCEMENT[MP];
+				MPperLevel = BRAWLER_LVLUP['MP'];
+				AdvancementHP = PIRATE_ADVANCEMENT['HP'];
+				AdvancementMP = PIRATE_ADVANCEMENT['MP'];
 				break;
 			default:
 				// Perhaps include Beginner data?
@@ -205,7 +205,6 @@ window.onload = function() {
 	};
 
 	var resetValues = function() {
-		console.log("yeehaw");
 		job.value = "Spearman";
 		currenthp.value = 0;
 		currentmp.value = 0;
