@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HP Washing Calculator</title>
+		<script src="js/hp-washing.js"></script>
+	</head>
+	<body class="hpwashing">
+		<div class="wrapper">
+			<h1>HP Washing Calculator</h1>
+			<br>
+			<h2>Insert your current stats here</h2>
+			<table>
+				<tbody>
+					<tr>
+						<td>Class</td>
+						<td>Current HP</td>
+						<td>Current MP</td>
+						<td>Current Level*</td>
+					</tr>
+					<tr>
+						<td>
+							<select id="class" name="job">
+								<option selected="" value="Spearman">Spearman</option>
+								<option value="Fighter">Fighter</option>
+								<option value="Page">Page</option>
+								<option value="Hunter">Hunter</option>
+								<option value="Crossbowman">Crossbowman</option>
+								<option value="Assassin">Assassin</option>
+								<option value="Bandit">Bandit</option>
+								<option value="Gunslinger">Gunslinger</option>
+								<option value="Brawler">Brawler**</option>
+							</select>
+						</td>
+						<td>
+							<input id="currenthp" type="number" size="10" maxlength="5" value="0"
+								name="currenthp"
+								style="background: none repeat scroll 0% 0% rgb(238, 238, 238);">
+						</td>
+						<td>
+							<input id="currentmp" type="number" size="10" maxlength="5" value="0"
+								name="currentmp"
+								style="background: none repeat scroll 0% 0% rgb(238, 238, 238);">
+						</td>
+						<td>
+							<input id="currentlevel" type="number" size="10" maxlength="3" value="30"
+								name="currentlevel"
+								style="background: none repeat scroll 0% 0% rgb(238, 238, 238);">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="note">
+				*Cannot calculate HP washing below level 30.
+				<br>
+				**Brawler class assumes the skill "Improve MaxHP" is maxed.
+			</p>
+			<h2>Insert your goals here:</h2>
+			<table>
+				<tbody>
+					<tr>
+						<td>HP Goal</td>
+						<td>Level Goal</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="hpgoal" type="number" size="10" maxlength="3" value="30"
+								name="hpgoal"
+								style="background: none repeat scroll 0% 0% rgb(238, 238, 238);">
+						</td>
+						<td>
+							<input id="levelgoal" type="number" size="10" maxlength="3" value="30"
+								name="levelgoal"
+								style="background: none repeat scroll 0% 0% rgb(238, 238, 238);">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="submit">
+				<button id="calculate">Calculate washing requirements</button>
+				<button id="reset">Reset values</button>
+			</div>
+			<h2>HP Washing Requirements</h2>
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							AP required into HP: <input id="apintohp" type="number" size="10"
+								maxlength="3" value="0" name="apintohp">
+						</td>
+						<td>
+							Extra MP above minimum: <input id="extramp" type="number" size="10"
+								maxlength="3" value="0" name="extramp">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							AP resets required: <input id="apresets" type="number" size="10"
+								maxlength="3" value="0" name="apresets">
+						</td>
+						<td>
+							Total MP required by level goal: <input id="totalmp" type="number" size="10"
+								maxlength="3" value="0" name="totalmp">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							INT required while leveling: <input id="baseint" type="number" size="10"
+								maxlength="3" value="0" name="baseint">
+						</td>
+						<td>
+							MP required to gain through INT: <input id="intmp" type="number"
+								size="10" maxlength="3" value="0" name="intmp">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="note">
+				NOTE: All calculations are done using estimates. In reality, there is randomness and ranges, so treat all results are estimates!
+			</p>
+		</div>
+	</body>
+</html>

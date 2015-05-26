@@ -1,13 +1,7 @@
 // Known issues:
 // * Brawlers doesn't take into account not having maxed "Improved MaxHP" skill.
-// * Apparently there are HP/MP gains for every class in 3rd and 4th job advancements,
-//   not just the 2nd.
 // * This calculator is using estimates, but in reality maple uses a lot of random values.
-window.onload = function() {
-	// Event listeners
-	document.getElementById("calculate").addEventListener("click", calculate);
-	document.getElementById("reset").addEventListener("click", resetValues);
-	
+window.onload = function() {	
 	// Background data and formulas
 	// NOTE: The data is currently using approximations and averages. Thus,
 	// the results will not be perfectly accurate.
@@ -89,140 +83,145 @@ window.onload = function() {
 	var totalmp = document.getElementById("totalmp");
 	var baseint = document.getElementById("baseint");
 	var intmp = document.getElementById("intmp");
-}
 
-// Note: No cool stylistic things from me here, just the raw calculations
-var calculate = function() {
-	// NOTE: Apparently, you actually do gain hp/mp from 3rd and 4th job
-	// advancement, as well as 2nd. This code will need to be updated with that.
-	
-	// Get the background data for the class selection
-	var HPperAP, MPloss, MinMPformula, MPperLevel, AdvancementHP, AdvancementMP;
-	switch (job.value) {
-		case "Spearman":
-			HPperAP = WARRIOR_AP[HP];
-			MPloss = WARRIOR_RESET[MPloss];
-			MinMPformula = SPEARMAN_MP_MIN;
-			MPperLevel = WARRIOR_LVLUP[MP];
-			AdvancementHP = SPEARMAN_ADVANCEMENT[HP];
-			AdvancementMP = SPEARMAN_ADVANCEMENT[MP];
-			break;
-		case "Fighter":
-			HPperAP = WARRIOR_AP[HP];
-			MPloss = WARRIOR_RESET[MPloss];
-			MinMPformula = FIGHTER_MP_MIN;
-			MPperLevel = WARRIOR_LVLUP[MP];
-			AdvancementHP = FIGHTER_ADVANCEMENT[HP];
-			AdvancementMP = FIGHTER_ADVANCEMENT[MP];
-			break;
-		case "Page":
-			HPperAP = WARRIOR_AP[HP];
-			MPloss = WARRIOR_RESET[MPloss];
-			MinMPformula = PAGE_MP_MIN;
-			MPperLevel = WARRIOR_LVLUP[MP];
-			AdvancementHP = PAGE_ADVANCEMENT[HP];
-			AdvancementMP = PAGE_ADVANCEMENT[MP];
-			break;
-		case "Hunter":
-		case "Crossbowman":
-			HPperAP = ARCHER_AP[HP];
-			MPloss = ARCHER_RESET[MPloss];
-			MinMPformula = ARCHER_MP_MIN;
-			MPperLevel = ARCHER_LVLUP[MP];
-			AdvancementHP = ARCHER_ADVANCEMENT[HP];
-			AdvancementMP = ARCHER_ADVANCEMENT[MP];
-			break;
-		case "Assassin":
-		case "Bandit":
-			HPperAP = THIEF_AP[HP];
-			MPloss = THIEF_RESET[MPloss];
-			MinMPformula = THIEF_MP_MIN;
-			MPperLevel = THIEF_LVLUP[MP];
-			AdvancementHP = THIEF_ADVANCEMENT[HP];
-			AdvancementMP = THIEF_ADVANCEMENT[MP];
-			break;
-		case "Gunslinger":
-			HPperAP = GUNSLINGER_AP[HP];
-			MPloss = PIRATE_RESET[MPloss];
-			MinMPformula = PIRATE_MP_MIN;
-			MPperLevel = GUNSLINGER_LVLUP[MP];
-			AdvancementHP = PIRATE_ADVANCEMENT[HP];
-			AdvancementMP = PIRATE_ADVANCEMENT[MP];
-			break;
-		case "Brawler":
-			HPperAP = BRAWLER_AP[HP];
-			MPloss = PIRATE_RESET[MPloss];
-			MinMPformula = PIRATE_MP_MIN;
-			MPperLevel = BRAWLER_LVLUP[MP];
-			AdvancementHP = PIRATE_ADVANCEMENT[HP];
-			AdvancementMP = PIRATE_ADVANCEMENT[MP];
-			break;
-		default:
-			// Perhaps include Beginner data?
-			HPperAP = -1;
-			MPloss = -1;
-			MinMPformula = -1;
-			MPperLevel = -1;
-			break;
-	}
-	
-	// Get out if there is an error
-	if (HPperAP == -1) {
-		return;
-	}
-	
-	// Adjust for how many advancements
-	if (levelgoal.value < 70) {
-		AdvancementHP = 0;
-		AdvancementMP = 0;
-	} else if (levelgoal.value < 120) {
-		if (currentlevel.value > 70) {
+	// Note: No cool stylistic things from me here, just the raw calculations
+	var calculate = function() {
+		// NOTE: Apparently, you actually do gain hp/mp from 3rd and 4th job
+		// advancement, as well as 2nd. This code will need to be updated with that.
+		
+		// Get the background data for the class selection
+		var HPperAP, MPloss, MinMPformula, MPperLevel, AdvancementHP, AdvancementMP;
+		switch (job.value) {
+			case "Spearman":
+				HPperAP = WARRIOR_AP[HP];
+				MPloss = WARRIOR_RESET[MPloss];
+				MinMPformula = SPEARMAN_MP_MIN;
+				MPperLevel = WARRIOR_LVLUP[MP];
+				AdvancementHP = SPEARMAN_ADVANCEMENT[HP];
+				AdvancementMP = SPEARMAN_ADVANCEMENT[MP];
+				break;
+			case "Fighter":
+				HPperAP = WARRIOR_AP[HP];
+				MPloss = WARRIOR_RESET[MPloss];
+				MinMPformula = FIGHTER_MP_MIN;
+				MPperLevel = WARRIOR_LVLUP[MP];
+				AdvancementHP = FIGHTER_ADVANCEMENT[HP];
+				AdvancementMP = FIGHTER_ADVANCEMENT[MP];
+				break;
+			case "Page":
+				HPperAP = WARRIOR_AP[HP];
+				MPloss = WARRIOR_RESET[MPloss];
+				MinMPformula = PAGE_MP_MIN;
+				MPperLevel = WARRIOR_LVLUP[MP];
+				AdvancementHP = PAGE_ADVANCEMENT[HP];
+				AdvancementMP = PAGE_ADVANCEMENT[MP];
+				break;
+			case "Hunter":
+			case "Crossbowman":
+				HPperAP = ARCHER_AP[HP];
+				MPloss = ARCHER_RESET[MPloss];
+				MinMPformula = ARCHER_MP_MIN;
+				MPperLevel = ARCHER_LVLUP[MP];
+				AdvancementHP = ARCHER_ADVANCEMENT[HP];
+				AdvancementMP = ARCHER_ADVANCEMENT[MP];
+				break;
+			case "Assassin":
+			case "Bandit":
+				HPperAP = THIEF_AP[HP];
+				MPloss = THIEF_RESET[MPloss];
+				MinMPformula = THIEF_MP_MIN;
+				MPperLevel = THIEF_LVLUP[MP];
+				AdvancementHP = THIEF_ADVANCEMENT[HP];
+				AdvancementMP = THIEF_ADVANCEMENT[MP];
+				break;
+			case "Gunslinger":
+				HPperAP = GUNSLINGER_AP[HP];
+				MPloss = PIRATE_RESET[MPloss];
+				MinMPformula = PIRATE_MP_MIN;
+				MPperLevel = GUNSLINGER_LVLUP[MP];
+				AdvancementHP = PIRATE_ADVANCEMENT[HP];
+				AdvancementMP = PIRATE_ADVANCEMENT[MP];
+				break;
+			case "Brawler":
+				HPperAP = BRAWLER_AP[HP];
+				MPloss = PIRATE_RESET[MPloss];
+				MinMPformula = PIRATE_MP_MIN;
+				MPperLevel = BRAWLER_LVLUP[MP];
+				AdvancementHP = PIRATE_ADVANCEMENT[HP];
+				AdvancementMP = PIRATE_ADVANCEMENT[MP];
+				break;
+			default:
+				// Perhaps include Beginner data?
+				HPperAP = -1;
+				MPloss = -1;
+				MinMPformula = -1;
+				MPperLevel = -1;
+				break;
+		}
+		
+		// Get out if there is an error
+		if (HPperAP == -1) {
+			return;
+		}
+		
+		// Adjust for how many advancements
+		if (levelgoal.value < 70) {
 			AdvancementHP = 0;
 			AdvancementMP = 0;
+		} else if (levelgoal.value < 120) {
+			if (currentlevel.value > 70) {
+				AdvancementHP = 0;
+				AdvancementMP = 0;
+			}
+		} else {
+			if (currentlevel.value > 120) {
+				AdvancementHP = 0;
+				AdvancementMP = 0;
+			} else if (currentlevel.value < 70) {
+				AdvancementHP *= 2;
+				AdvancementMP *= 2;
+			}
 		}
-	} else {
-		if (currentlevel.value > 120) {
-			AdvancementHP = 0;
-			AdvancementMP = 0;
-		} else if (currentlevel.value < 70) {
-			AdvancementHP *= 2;
-			AdvancementMP *= 2;
+		
+		// apintohp
+		if (HPperAP != 0) {
+			apintohp.value = (hpgoal.value - currenthp.value - AdvancementHP) / HPperAP;		
 		}
-	}
-	
-	// apintohp
-	if (HPperAP != 0) {
-		apintohp.value = (hpgoal.value - currenthp.value - AdvancementHP) / HPperAP;		
-	}
-	
-	// apresets
-	apresets.value = apintohp.value;
-	
-	// extramp
-	extramp.value = apintohp.value * MPloss;
-	
-	// totalmp
-	totalmp.value = MinMPformula(levelgoal.value) + extramp.value;
-	
-	// intmp
-	intmp.value = totalmp.value - ((levelgoal.value - currentlevel.value) * MPperLevel + AdvancementMP);
-	
-	// baseint
-	baseint.value = (intmp.value / (levelgoal.value - currentlevel.value)) * 10;
-}
+		
+		// apresets
+		apresets.value = apintohp.value;
+		
+		// extramp
+		extramp.value = apintohp.value * MPloss;
+		
+		// totalmp
+		totalmp.value = MinMPformula(levelgoal.value) + extramp.value;
+		
+		// intmp
+		intmp.value = totalmp.value - ((levelgoal.value - currentlevel.value) * MPperLevel + AdvancementMP);
+		
+		// baseint
+		baseint.value = (intmp.value / (levelgoal.value - currentlevel.value)) * 10;
+	};
 
-var resetValues = function() {
-	job.value = "Spearman";
-	currenthp.value = 0;
-	currentmp.value = 0;
-	currentlevel.value = 30;
-	hpgoal.value = 0;
-	levelgoal.value = 30;
+	var resetValues = function() {
+		console.log("yeehaw");
+		job.value = "Spearman";
+		currenthp.value = 0;
+		currentmp.value = 0;
+		currentlevel.value = 30;
+		hpgoal.value = 0;
+		levelgoal.value = 30;
+		
+		apintohp.value = 0;
+		extramp.value = 0;
+		apresets.value = 0;
+		totalmp.value = 0;
+		baseint.value = 0;
+		intmp.value = 0;
+	};
 	
-	apintohp.value = 0;
-	extramp.value = 0;
-	apresets.value = 0;
-	totalmp.value = 0;
-	baseint.value = 0;
-	intmp.value = 0;
+	// Event listeners
+	document.getElementById("calculate").addEventListener("click", calculate);
+	document.getElementById("reset").addEventListener("click", resetValues);
 }
