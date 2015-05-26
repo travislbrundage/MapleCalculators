@@ -182,7 +182,13 @@ window.onload = function() {
 				AdvancementMP *= 2;
 			}
 		}
-		
+		/*
+		console.log(AdvancementHP);
+		console.log(AdvancementMP);
+		console.log(HPperAP);
+		console.log(MPloss);
+		console.log(MPperLevel);
+		*/
 		// apintohp
 		if (HPperAP != 0) {
 			apintohp.value = (hpgoal.value - currenthp.value - AdvancementHP) / HPperAP;		
@@ -195,7 +201,7 @@ window.onload = function() {
 		extramp.value = apintohp.value * MPloss;
 		
 		// totalmp
-		totalmp.value = MinMPformula(levelgoal.value) + extramp.value;
+		totalmp.value = MinMPformula(levelgoal.value) + Number(extramp.value);
 		
 		// intmp
 		intmp.value = totalmp.value - ((levelgoal.value - currentlevel.value) * MPperLevel + AdvancementMP);
