@@ -24,9 +24,9 @@ window.onload = function() {
 	var SPEARMAN_ADVANCEMENT = {HP: 0, MP: 125};
 	var PAGE_ADVANCEMENT = {HP: 0, MP: 125};
 	var FIGHTER_ADVANCEMENT = {HP: 325, MP: 0};
-	var ARCHER_ADVANCEMENT = {HP: 0, MP: 125};
-	var THIEF_ADVANCEMENT = {HP: 0, MP: 125};
-	var PIRATE_ADVANCEMENT = {HP: 0, MP: 125};
+	var ARCHER_ADVANCEMENT = {HP: 325, MP: 125};
+	var THIEF_ADVANCEMENT = {HP: 325, MP: 125};
+	var PIRATE_ADVANCEMENT = {HP: 325, MP: 125};
 	
 	// Raw level up gains
 	// NOTE: The true formula has some randomness in it which is not used here.
