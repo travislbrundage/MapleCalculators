@@ -105,12 +105,13 @@ window.onload = function() {
 		}
 		
 		// Get the background data for the class selection
-		var HPperAP, MPloss, MinMPformula, MPperLevel, AdvancementHP, AdvancementMP;
+		var HPperAP, MPloss, MinMPformula, HPperLevel, MPperLevel, AdvancementHP, AdvancementMP;
 		switch (job.value) {
 			case "Spearman":
 				HPperAP = WARRIOR_AP[HP];
 				MPloss = WARRIOR_RESET['MPloss'];
 				MinMPformula = SPEARMAN_MP_MIN;
+				HPperLevel = WARRIOR_LVLUP[HP];
 				MPperLevel = WARRIOR_LVLUP[MP];
 				AdvancementHP = SPEARMAN_ADVANCEMENT[HP];
 				AdvancementMP = SPEARMAN_ADVANCEMENT[MP];
@@ -119,6 +120,7 @@ window.onload = function() {
 				HPperAP = WARRIOR_AP[HP];
 				MPloss = WARRIOR_RESET['MPloss'];
 				MinMPformula = FIGHTER_MP_MIN;
+				HPperLevel = WARRIOR_LVLUP[HP];
 				MPperLevel = WARRIOR_LVLUP[MP];
 				AdvancementHP = FIGHTER_ADVANCEMENT[HP];
 				AdvancementMP = FIGHTER_ADVANCEMENT[MP];
@@ -127,6 +129,7 @@ window.onload = function() {
 				HPperAP = WARRIOR_AP[HP];
 				MPloss = WARRIOR_RESET['MPloss'];
 				MinMPformula = PAGE_MP_MIN;
+				HPperLevel = WARRIOR_LVLUP[HP];
 				MPperLevel = WARRIOR_LVLUP[MP];
 				AdvancementHP = PAGE_ADVANCEMENT[HP];
 				AdvancementMP = PAGE_ADVANCEMENT[MP];
@@ -136,6 +139,7 @@ window.onload = function() {
 				HPperAP = ARCHER_AP[HP];
 				MPloss = ARCHER_RESET['MPloss'];
 				MinMPformula = ARCHER_MP_MIN;
+				HPperLevel = ARCHER_LVLUP[HP];
 				MPperLevel = ARCHER_LVLUP[MP];
 				AdvancementHP = ARCHER_ADVANCEMENT[HP];
 				AdvancementMP = ARCHER_ADVANCEMENT[MP];
@@ -145,6 +149,7 @@ window.onload = function() {
 				HPperAP = THIEF_AP[HP];
 				MPloss = THIEF_RESET['MPloss'];
 				MinMPformula = THIEF_MP_MIN;
+				HPperLevel = THIEF_LVLUP[HP];
 				MPperLevel = THIEF_LVLUP[MP];
 				AdvancementHP = THIEF_ADVANCEMENT[HP];
 				AdvancementMP = THIEF_ADVANCEMENT[MP];
@@ -153,6 +158,7 @@ window.onload = function() {
 				HPperAP = GUNSLINGER_AP[HP];
 				MPloss = PIRATE_RESET['MPloss'];
 				MinMPformula = PIRATE_MP_MIN;
+				HPperLevel = GUNSLINGER_LVLUP[HP];
 				MPperLevel = GUNSLINGER_LVLUP[MP];
 				AdvancementHP = PIRATE_ADVANCEMENT[HP];
 				AdvancementMP = PIRATE_ADVANCEMENT[MP];
@@ -161,6 +167,7 @@ window.onload = function() {
 				HPperAP = BRAWLER_AP[HP];
 				MPloss = PIRATE_RESET['MPloss'];
 				MinMPformula = PIRATE_MP_MIN;
+				HPperLevel = BRAWLER_LVLUP[HP];
 				MPperLevel = BRAWLER_LVLUP[MP];
 				AdvancementHP = PIRATE_ADVANCEMENT[HP];
 				AdvancementMP = PIRATE_ADVANCEMENT[MP];
@@ -170,6 +177,7 @@ window.onload = function() {
 				HPperAP = -1;
 				MPloss = -1;
 				MinMPformula = -1;
+				HPperLevel = -1;
 				MPperLevel = -1;
 				break;
 		}
@@ -200,7 +208,7 @@ window.onload = function() {
 		
 		// apintohp
 		if (HPperAP != 0) {
-			apintohp.value = (hpgoal.value - currenthp.value - AdvancementHP) / HPperAP;		
+			apintohp.value = (hpgoal.value - currenthp.value - AdvancementHP - ((levelgoal.value - currentlevel.value) * HPperLevel)) / HPperAP;		
 		}
 		
 		// apresets
@@ -213,7 +221,7 @@ window.onload = function() {
 		totalmp.value = MinMPformula(levelgoal.value) + Number(extramp.value);
 		
 		// intmp
-		intmp.value = totalmp.value - ((levelgoal.value - currentlevel.value) * MPperLevel + AdvancementMP);
+		intmp.value = totalmp.value - ((levelgoal.value - currentlevel.value) * MPperLevel + AdvancementMP + Number(currentmp.value));
 		
 		// baseint
 		baseint.value = (intmp.value / (levelgoal.value - currentlevel.value)) * 10;
