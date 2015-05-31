@@ -95,9 +95,12 @@ window.onload = function() {
 				break;
 			case "Maximum":
 				HP = 'MaxHP';
-				MP = 'MinMP';
+				MP = 'MaxMP';
 				break;
 			case "Average":
+				HP = 'HP';
+				MP = 'MP';
+				break;
 			default:
 				HP = 'HP';
 				MP = 'MP';
