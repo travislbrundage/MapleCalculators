@@ -22,8 +22,7 @@ window.onload = function() {
 	var THIEF_ADVANCEMENT = {HP: 325, MP: 125, MaxHP: 350, MinHP: 300, MaxMP: 150, MinMP: 100};
 	var PIRATE_ADVANCEMENT = {HP: 325, MP: 125, MaxHP: 350, MinHP: 300, MaxMP: 150, MinMP: 100};
 	
-	// Raw level up gains
-	// NOTE: The true formula has some randomness in it which is not used here.
+	// Raw level up gains (with less than 10 base INT)
 	var WARRIOR_LVLUP = {HP: 66, MP: 5, MaxHP: 68, MinHP: 64, MaxMP: 6, MinMP: 4};
 	var ARCHER_LVLUP = {HP: 22, MP: 15, MaxHP: 24, MinHP: 20, MaxMP: 16, MinMP: 14};
 	var THIEF_LVLUP = {HP: 22, MP: 15, MaxHP: 24, MinHP: 20, MaxMP: 16, MinMP: 14};
@@ -32,21 +31,24 @@ window.onload = function() {
 	// The results will be inaccurate for a Brawler that does not have this skill maxed.
 	var BRAWLER_LVLUP = {HP: 55, MP: 20.5, MaxHP: 58, MinHP: 52, MaxMP: 23, MinMP: 18};
 	
-	// Raw AP gains (with less than 10 base INT)
-	// NOTE: The true formula has some randomness in it which is not used here.
+	// Raw AP gains
 	var WARRIOR_AP = {HP: 52, MP: 4, MaxHP: 54, MinHP: 50, MaxMP: 4, MinMP: 2};
 	var ARCHER_AP = {HP: 18, MP: 11, MaxHP: 20, MinHP: 16, MaxMP: 12, MinMP: 10};
-	var THIEF_AP = {HP: 18, MP: 11, MaxHP: 20, MinHP: 16, MaxMP: 12, MinMP: 10};
-	var GUNSLINGER_AP = {HP: 20, MP: 15, MaxHP: 22, MinHP: 18, MaxMP: 16, MinMP: 14};
+	var THIEF_AP = {HP: 22, MP: 11, MaxHP: 24, MinHP: 20, MaxMP: 12, MinMP: 10};
+	var GUNSLINGER_AP = {HP: 18, MP: 15, MaxHP: 20, MinHP: 16, MaxMP: 16, MinMP: 14};
 	// NOTE: This is using the stats after having maxed Brawler's "Improve MaxHP" skill.
 	// The results will be inaccurate for a Brawler that does not have this skill maxed.
-	var BRAWLER_AP = {HP: 40, MP: 15, MaxHP: 42, MinHP: 38, MaxMP: 16, MinMP: 14};
+	var BRAWLER_AP = {HP: 38, MP: 15, MaxHP: 40, MinHP: 36, MaxMP: 16, MinMP: 14};
 	
-	// AP reset gains and losses - Don't think anything besides MP loss is needed?
-	var WARRIOR_RESET = {HPgain: 20, MPgain: 2, HPloss: 54, MPloss: 4};
-	var ARCHER_RESET = {HPgain: 16, MPgain: 10, HPloss: 20, MPloss: 12};
-	var THIEF_RESET = {HPgain: 16, MPgain: 10, HPloss: 20, MPloss: 12};
-	var PIRATE_RESET = {HPgain: 18, MPgain: 14, HPloss: 42, MPloss: 16};
+	// AP reset gains and losses
+	var WARRIOR_RESET = {HPgain: 52.5, MPgain: 2, MaxHPgain: 55,
+						 MinHPgain: 50, HPloss: 54, MPloss: 4};
+	var ARCHER_RESET = {HPgain: 18, MPgain: 10, MaxHPgain: 20,
+						 MinHPgain: 16, HPloss: 20, MPloss: 12};
+	var THIEF_RESET = {HPgain: 18, MPgain: 10, MaxHPgain: 20,
+					   MinHPgain: 16, HPloss: 20, MPloss: 12};
+	var GUNSLINGER_RESET = {HPgain: 20, MPgain: 14, HPloss: 22, MPloss: 16};
+	var BRAWLER_RESET = {HPgain: 40, MPgain: 14, HPloss: 42, MPloss: 16};
 	
 	// Minimum MP formulas
 	var SPEARMAN_MP_MIN = function(level) {
@@ -87,23 +89,27 @@ window.onload = function() {
 
 	// Note: No cool stylistic things from me here, just the raw calculations
 	var calculate = function() {
-		var HP, MP;
+		var HP, MP, HPgain;
 		switch (dataset.value) {
 			case "Minimum":
 				HP = 'MinHP';
 				MP = 'MinMP';
+				HPgain = 'MinHPgain';
 				break;
 			case "Maximum":
 				HP = 'MaxHP';
 				MP = 'MaxMP';
+				HPgain = 'MaxHPgain';
 				break;
 			case "Average":
 				HP = 'HP';
 				MP = 'MP';
+				HPgain = 'HPgain';
 				break;
 			default:
 				HP = 'HP';
 				MP = 'MP';
+				HPgain = 'HPgain';
 				break;
 		}
 		
@@ -111,7 +117,7 @@ window.onload = function() {
 		var HPperAP, MPloss, MinMPformula, HPperLevel, MPperLevel, AdvancementHP, AdvancementMP;
 		switch (job.value) {
 			case "Spearman":
-				HPperAP = WARRIOR_AP[HP];
+				HPperAP = WARRIOR_RESET[HPgain];
 				MPloss = WARRIOR_RESET['MPloss'];
 				MinMPformula = SPEARMAN_MP_MIN;
 				HPperLevel = WARRIOR_LVLUP[HP];
@@ -120,7 +126,7 @@ window.onload = function() {
 				AdvancementMP = SPEARMAN_ADVANCEMENT[MP];
 				break;
 			case "Fighter":
-				HPperAP = WARRIOR_AP[HP];
+				HPperAP = WARRIOR_RESET[HPgain];
 				MPloss = WARRIOR_RESET['MPloss'];
 				MinMPformula = FIGHTER_MP_MIN;
 				HPperLevel = WARRIOR_LVLUP[HP];
@@ -129,7 +135,7 @@ window.onload = function() {
 				AdvancementMP = FIGHTER_ADVANCEMENT[MP];
 				break;
 			case "Page":
-				HPperAP = WARRIOR_AP[HP];
+				HPperAP = WARRIOR_RESET[HPgain];
 				MPloss = WARRIOR_RESET['MPloss'];
 				MinMPformula = PAGE_MP_MIN;
 				HPperLevel = WARRIOR_LVLUP[HP];
@@ -158,7 +164,7 @@ window.onload = function() {
 				AdvancementMP = THIEF_ADVANCEMENT[MP];
 				break;
 			case "Gunslinger":
-				HPperAP = GUNSLINGER_AP[HP];
+				HPperAP = GUNSLINGER_RESET['HPgain'];
 				MPloss = PIRATE_RESET['MPloss'];
 				MinMPformula = PIRATE_MP_MIN;
 				HPperLevel = GUNSLINGER_LVLUP[HP];
@@ -167,7 +173,7 @@ window.onload = function() {
 				AdvancementMP = PIRATE_ADVANCEMENT[MP];
 				break;
 			case "Brawler":
-				HPperAP = BRAWLER_AP[HP];
+				HPperAP = BRAWLER_RESET['HPgain'];
 				MPloss = PIRATE_RESET['MPloss'];
 				MinMPformula = PIRATE_MP_MIN;
 				HPperLevel = BRAWLER_LVLUP[HP];
