@@ -165,7 +165,7 @@ window.onload = function() {
 				break;
 			case "Gunslinger":
 				HPperAP = GUNSLINGER_RESET['HPgain'];
-				MPloss = PIRATE_RESET['MPloss'];
+				MPloss = GUNSLINGER_RESET['MPloss'];
 				MinMPformula = PIRATE_MP_MIN;
 				HPperLevel = GUNSLINGER_LVLUP[HP];
 				MPperLevel = GUNSLINGER_LVLUP[MP];
@@ -174,7 +174,7 @@ window.onload = function() {
 				break;
 			case "Brawler":
 				HPperAP = BRAWLER_RESET['HPgain'];
-				MPloss = PIRATE_RESET['MPloss'];
+				MPloss = BRAWLER_RESET['MPloss'];
 				MinMPformula = PIRATE_MP_MIN;
 				HPperLevel = BRAWLER_LVLUP[HP];
 				MPperLevel = BRAWLER_LVLUP[MP];
